@@ -15,6 +15,10 @@ class Board:
                 row_list.extend(row_square)
                 if square_no != 3:
                     row_list.append('║')
+                    
+            row = f'║ {" ".join(row_list)} ║\n'
+            row_empty = row.replace('0', ' ')
+            board_string += row_empty
 
 
 
