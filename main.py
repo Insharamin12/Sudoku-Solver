@@ -42,6 +42,7 @@ class Board:
 
     def valid_in_row(self, row, num):
         return num not in self.board[row]
+        
     def valid_in_col(self, col, num):
         return all(
             self.board[row][col] != num
@@ -55,3 +56,6 @@ class Board:
                 if self.board[row_no][col_no] == num:
                     return False
         return True
+        
+    def is_valid(self, empty, num):
+
