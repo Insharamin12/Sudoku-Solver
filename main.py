@@ -47,3 +47,6 @@ class Board:
             self.board[row][col] != num
             for row in range(9)
         )
+    def valid_in_square(self, row, col, num):
+        row_start = (row // 3) * 3
+        col_start=(col // 3) * 3
