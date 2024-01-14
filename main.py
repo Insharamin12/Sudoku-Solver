@@ -7,7 +7,6 @@ class Board:
         middle_lines = f'╟───{"┼───"*2}{"╫───"}{"┼───"*2}{"╫───"}{"┼───"*2}╢\n'
         lower_lines = f'╚═══{"╧═══"*2}{"╩═══"}{"╧═══"*2}{"╩═══"}{"╧═══"*2}╝\n'
         board_string = upper_lines
-
         for index, line in enumerate(self.board):
             row_list = []
             for square_no, part in enumerate([line[:3], line[3:6], line[6:]], start=1):
@@ -29,6 +28,7 @@ class Board:
                     board_string += middle_lines
             else:
                 board_string += lower_lines
+
         return board_string
 
     def find_empty_cell(self):
@@ -42,21 +42,19 @@ class Board:
 
     def valid_in_row(self, row, num):
         return num not in self.board[row]
-        
+
     def valid_in_col(self, col, num):
-        return all(
-            self.board[row][col] != num
-            for row in range(9)
-        )
+        return all(self.board[row][col] != num for row in range(9))
+
     def valid_in_square(self, row, col, num):
         row_start = (row // 3) * 3
-        col_start=(col // 3) * 3
+        col_start = (col // 3) * 3
         for row_no in range(row_start, row_start + 3):
             for col_no in range(col_start, col_start + 3):
                 if self.board[row_no][col_no] == num:
                     return False
         return True
-        
+
     def is_valid(self, empty, num):
         row, col = empty
         valid_in_row = self.valid_in_row(row, num)
@@ -75,17 +73,21 @@ class Board:
                     if self.solver():
                         return True
                     self.board[row][col] = 0
+
         return False
-        
-    def solve_sudoku(board):
+
+
+def solve_sudoku(board):
     gameboard = Board(board)
-    print(f'\nPuzzle to solve:\n{gameboard}')
+    print(f"\nPuzzle to solve:\n{gameboard}")
     if gameboard.solver():
-        print('\nSolved puzzle:')
+        print("\nSolved puzzle:")
         print(gameboard)
+
     else:
-        print('\nThe provided puzzle is unsolvable.')
+        print("\nThe provided puzzle is unsolvable.")
     return gameboard
+
 
 puzzle = [
   [0, 0, 2, 0, 0, 8, 0, 0, 0],
