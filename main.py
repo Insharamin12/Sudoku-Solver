@@ -7,8 +7,11 @@ class Board:
         middle_lines = f'╟───{"┼───"*2}{"╫───"}{"┼───"*2}{"╫───"}{"┼───"*2}╢\n'
         lower_lines = f'╚═══{"╧═══"*2}{"╩═══"}{"╧═══"*2}{"╩═══"}{"╧═══"*2}╝\n'
         board_string = upper_lines
+
+         # Iterate through each row of the board
         for index, line in enumerate(self.board):
             row_list = []
+             # Iterate through each group of three squares in the row
             for square_no, part in enumerate([line[:3], line[3:6], line[6:]], start=1):
                 row_square = "|".join(str(item) for item in part)
                 row_list.extend(row_square)
@@ -16,9 +19,10 @@ class Board:
                     row_list.append("║")
 
             row = f'║ {" ".join(row_list)} ║\n'
-            row_empty = row.replace("0", " ")
+            row_empty = row.replace("0", " ") # Replace '0' with a space for empty cells
             board_string += row_empty
-
+            
+            # Add horizontal lines after every three rows
             if index < 8:
                 if index % 3 == 2:
                     board_string += (
@@ -31,6 +35,7 @@ class Board:
 
         return board_string
 
+    # Find the first empty cell in the board
     def find_empty_cell(self):
         for row, contents in enumerate(self.board):
             try:
@@ -40,12 +45,15 @@ class Board:
                 pass
         return None
 
+    # Check if a number is valid to be placed in a certain row
     def valid_in_row(self, row, num):
         return num not in self.board[row]
 
+    # Check if a number is valid to be placed in a certain column
     def valid_in_col(self, col, num):
         return all(self.board[row][col] != num for row in range(9))
 
+    # Check if a number is valid to be placed in a certain 3x3 square
     def valid_in_square(self, row, col, num):
         row_start = (row // 3) * 3
         col_start = (col // 3) * 3
@@ -62,6 +70,7 @@ class Board:
         valid_in_square = self.valid_in_square(row, col, num)
         return all([valid_in_row, valid_in_col, valid_in_square])
 
+    # Solve the Sudoku puzzle using backtracking
     def solver(self):
         if (next_empty := self.find_empty_cell()) is None:
             return True
@@ -76,7 +85,7 @@ class Board:
 
         return False
 
-
+# Function to solve Sudoku puzzle
 def solve_sudoku(board):
     gameboard = Board(board)
     print(f"\nPuzzle to solve:\n{gameboard}")
